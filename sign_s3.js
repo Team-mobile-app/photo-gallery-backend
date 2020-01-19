@@ -1,5 +1,5 @@
 var aws = require('aws-sdk'); 
-require('dotenv').config({path: __dirname + '/../../.env'}); // Configure dotenv to load in the .env file
+require('dotenv').config({path: __dirname + '/.env'}); // Configure dotenv to load in the .env file
 
 // Configure aws with your accessKeyId and your secretAccessKey
 aws.config.update({

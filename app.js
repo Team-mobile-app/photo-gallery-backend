@@ -10,7 +10,7 @@ try{
   }
   
   // Config
-  var port = 3001;
+  var port = 5000;
   
   
   var app = express(); // Define our app
