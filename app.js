@@ -24,6 +24,8 @@ try{
   var sign_s3 = require('./sign_s3');
   
   app.use('/sign_s3', sign_s3.sign_s3);
+  app.use('/delete_photo', sign_s3.delete_photo);
+
   
   app.listen(port);
   
