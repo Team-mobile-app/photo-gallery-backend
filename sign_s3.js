@@ -27,7 +27,7 @@ exports.sign_s3 = (req,res) => {
   // Make a request to the S3 API to get a signed URL which we can use to upload our file
   s3.getSignedUrl('putObject', s3Params, (err, data) => {
     if (err) {
-      console.log(err);
+      console.log('error in get url before uploading to s3', err);
       res.json({success: false, error: err});
     }
     // Data payload of what we are sending back, the url of the signedRequest and a URL where we can access the content after its saved. 
@@ -67,44 +67,30 @@ exports.get_photos = (req, res) => {
    };
   s3.listObjects(params, function(err, data) {
     if (err) {
-      console.log(err, err.stack); // an error occurred
+      console.log('error in get all photos name', err.stack); // an error occurred
     } else {
-      console.log(data.Contents);
       data.Contents.forEach((item) => {
         result.push(item.Key);
       })
-      console.log('Get photo successfully', result);
+      console.log('Get all photo name successfully', result);
       res.json({ success: true, data: result });
     }
   });
-  
 }
 
-exports.get_photo = (req, res) => {
-  console.log('result in get photo backend', res);
+// exports.get_photo = (req, res) => {
+//   let fileName = req.query.fileName;
+//   const params = {
+//     Bucket: S3_BUCKET,
+//     Key: fileName,
+//   };
   
-  let fileName = res.fileName;
-  const params = {
-    Bucket: S3_BUCKET,
-    Key: fileName,
-  };
-
-  s3.getObject(params, (err, file) => {
-    if (err) {
-      console.log(err);
-      res.json({success: false, error: err});
-    }
-
-    // const returnData = {
-    //   signedRequest: file,
-    //   url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-    // };
-
-    console.log('file', file);
-
-    return file;
-    
-    // Send it all back
-    // res.json({ success: true, data: { file.Body }});
-  });
-}
+//   s3.getObject(params, (err, file) => {
+//     if (err) {
+//       console.log('error in get photo using photo name', err);
+//       res.json({success: false, error: err});
+//     }
+//     console.log('get photo using file name successful', fileName);    
+//     res.json({ success: true, data: file.Body });
+//   });
+// }
