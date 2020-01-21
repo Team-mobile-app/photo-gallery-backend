@@ -27,7 +27,7 @@ exports.sign_s3 = (req,res) => {
   // Make a request to the S3 API to get a signed URL which we can use to upload our file
   s3.getSignedUrl('putObject', s3Params, (err, data) => {
     if (err) {
-      console.log(err);
+      console.log('error in get url before uploading to s3', err);
       res.json({success: false, error: err});
     }
     // Data payload of what we are sending back, the url of the signedRequest and a URL where we can access the content after its saved. 
@@ -59,3 +59,38 @@ exports.delete_photo = (req, res) => {
     }
   });
 }
+
+exports.get_photos = (req, res) => {
+  let result = [];
+  var params = {
+    Bucket: S3_BUCKET
+   };
+  s3.listObjects(params, function(err, data) {
+    if (err) {
+      console.log('error in get all photos name', err.stack); // an error occurred
+    } else {
+      data.Contents.forEach((item) => {
+        result.push(item.Key);
+      })
+      console.log('Get all photo name successfully', result);
+      res.json({ success: true, data: result });
+    }
+  });
+}
+
+// exports.get_photo = (req, res) => {
+//   let fileName = req.query.fileName;
+//   const params = {
+//     Bucket: S3_BUCKET,
+//     Key: fileName,
+//   };
+  
+//   s3.getObject(params, (err, file) => {
+//     if (err) {
+//       console.log('error in get photo using photo name', err);
+//       res.json({success: false, error: err});
+//     }
+//     console.log('get photo using file name successful', fileName);    
+//     res.json({ success: true, data: file.Body });
+//   });
+// }

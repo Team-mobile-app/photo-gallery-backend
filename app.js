@@ -25,7 +25,7 @@ try{
   
   app.use('/sign_s3', sign_s3.sign_s3);
   app.use('/delete_photo', sign_s3.delete_photo);
-
+  app.use('/get_photos', sign_s3.get_photos);
   
   app.listen(port);
   
