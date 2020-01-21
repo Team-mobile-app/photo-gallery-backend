@@ -42,7 +42,7 @@ exports.sign_s3 = (req,res) => {
 
 exports.delete_photo = (req, res) => {
   const fileName = req.body.fileName;
-  console.log('delete fileName', fileName);
+  //console.log('delete fileName', fileName);
   
   var params = {
     Bucket: S3_BUCKET,
@@ -54,7 +54,7 @@ exports.delete_photo = (req, res) => {
       console.log('Error when deleting photo', err);
       res.json({success: false, error: err});
     } else { 
-      console.log('Delete successfully', data);
+      //console.log('Delete successfully', data);
       res.json({ success: true, data });
     }
   });
@@ -72,7 +72,7 @@ exports.get_photos = (req, res) => {
       data.Contents.forEach((item) => {
         result.push(item.Key);
       })
-      console.log('Get all photo name successfully', result);
+      //console.log('Get all photo name successfully', result);
       res.json({ success: true, data: result });
     }
   });
